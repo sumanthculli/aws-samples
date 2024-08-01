@@ -37,8 +37,8 @@ cat > $ABAC_POLICY_FILE << EOL
             "Resource": "*",
             "Condition": {
                 "StringEquals": {
-                    "aws:ResourceTag/Department": "\${aws:PrincipalTag/Department}",
-                    "aws:ResourceTag/Project": "\${aws:PrincipalTag/Project}"
+                    "aws:ResourceTag/team": "\${aws:PrincipalTag/team}",
+                    "aws:ResourceTag/namespace": "\${aws:PrincipalTag/ns1}"
                 }
             }
         }
