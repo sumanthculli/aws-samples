@@ -5,6 +5,10 @@ SECRET_NAME="/dev/eks/ns1"
 DESCRIPTION="My test secret created with the API."
 SECRET_STRING='{"user":"eksns1","password":"eskns1password"}'
 REGION="us-west-2"
+TAG_KEY1="namespace"
+TAG_VALUE1="ns1"
+TAG_KEY2="team"
+TAG_VALUE2="cloudeng"
 
 # AWS credentials (ensure these are set in your environment or use AWS CLI configured profile)
 AWS_ACCESS_KEY_ID="your-access-key-id"
@@ -20,7 +24,18 @@ REQUEST_PAYLOAD=$(cat <<EOF
 {
   "Name": "$SECRET_NAME",
   "Description": "$DESCRIPTION",
-  "SecretString": "$SECRET_STRING"
+  "SecretString": "$SECRET_STRING",
+  "Tags": [
+    {
+      "Key": "$TAG_KEY1",
+      "Value": "$TAG_VALUE1"
+    },
+    {
+      "Key": "$TAG_KEY2",
+      "Value": "$TAG_VALUE2"
+    }
+  ]
+  
 }
 EOF
 )
