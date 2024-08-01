@@ -11,9 +11,9 @@ TAG_KEY2="team"
 TAG_VALUE2="cloudeng"
 
 # AWS credentials (ensure these are set in your environment or use AWS CLI configured profile)
-AWS_ACCESS_KEY_ID="your-access-key-id"
-AWS_SECRET_ACCESS_KEY="your-secret-access-key"
-SESSION_TOKEN="your-session-token" # Optional, if using temporary credentials
+AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
+AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
+SESSION_TOKEN="${SESSION_TOKEN}" # Optional, if using temporary credentials
 
 # Generate the current date in the required format
 DATE=$(date -u +"%Y%m%dT%H%M%SZ")
