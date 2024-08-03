@@ -40,7 +40,7 @@ public class SecretsManagerService {
         String secretString = "{\"username\":\"" + secretData.get("username") + "\",\"password\":\"" + secretData.get("password") + "\"}";
 
         UpdateSecretRequest updateSecretRequest = UpdateSecretRequest.builder().
-                secretId("eks/dev/ns5")
+                secretId(secretName)
                 .secretString(secretString)
                 .build();
 
