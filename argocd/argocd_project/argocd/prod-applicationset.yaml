@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prod-applications
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/your-org/your-repo.git
+        revision: HEAD
+        directories:
+          - path: apps/*/envs/prod
+  template:
+    metadata:
+      name: '{{path.basename}}-prod'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/your-org/your-repo.git
+        targetRevision: HEAD
+        path: '{{path}}'
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{path.basename}}-prod'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
