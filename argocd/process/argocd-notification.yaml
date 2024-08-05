@@ -1,0 +1,29 @@
+## argocd-notifications-config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-notifications-cm
+data:
+  trigger.on-sync-succeeded: |
+    - when: app.status.operationState.phase in ['Succeeded'] and app.status.sync.status == 'Synced'
+      send: [github-pr]
+  template.github-pr: |
+    message: Application {{.app.metadata.name}} has been successfully synced.
+    github:
+      owner: your-org
+      repo: your-repo
+      issue:
+        number: 1
+  service.github: |
+    token: $github-token
+    owner: your-org
+    repo: your-repo
+---
+## argocd-notifications-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-notifications-secret
+type: Opaque
+stringData:
+  github-token: <your-github-token>
