@@ -1,7 +1,0 @@
-## apps/myapp/envs/dev/kustomization.yaml
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-- ../../base
-patchesStrategicMerge:
-- deployment-patch.yaml
