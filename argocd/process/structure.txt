@@ -1,0 +1,13 @@
+/apps
+  /app1
+    /base
+    /envs
+      /dev
+      /qa
+      /prod
+  /app2
+    /base
+    /envs
+      /dev
+      /qa
+      /prod
