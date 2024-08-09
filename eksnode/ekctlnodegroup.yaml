@@ -1,0 +1,24 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: my-cluster
+  region: us-east-1
+
+managedNodeGroups:
+  - name: my-managed-nodegroup
+    instanceType: t3.medium
+    desiredCapacity: 2
+    minSize: 1
+    maxSize: 3
+    volumeSize: 20
+    privateNetworking: true
+    subnets:
+      - subnet-xx
+      - subnet-xx
+      - subnet-xxx
+    securityGroups:
+      withShared: true    # Use shared security groups created by eksctl
+      withLocal: false     # Use local security groups specific to the node group
+      attachIDs:
+        - sg-xxx  # Attach a specific custom security group
