@@ -1,0 +1,11 @@
+apiVersion: networking.istio.io/v1
+kind: Sidecar
+metadata:
+  name: google-egress
+  namespace: eks-samples # Replace with your actual namespace
+spec:
+  outboundTrafficPolicy:
+    mode: REGISTRY_ONLY
+  egress:
+  - hosts:
+    - "*/ipv4.google.com"
