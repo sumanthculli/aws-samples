@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox-pod
+  namespace: eks-samples
+  annotations:
+    proxy.istio.io/config: |
+      proxyMetadata:
+       ISTIO_META_DNS_CAPTURE: "true"
+       ISTIO_META_DNS_AUTO_ALLOCATE: "true"
+       ISTIO_ENABLE_IPV4_OUTBOUND_LISTENER_FOR_IPV6_CLUSTERS: "true
+spec:
+  nodeName: <>
+  containers:
+  - name: busybox-nicolaka
+    image: nicolaka/netshoot
+    command: ["sleep", "3600"]
