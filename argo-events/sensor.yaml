@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: file-sensor
+  namespace: defau;t
+spec:
+  dependencies:
+    - name: file-dependency
+      eventSourceName: file-event-source
+      eventName: example
+  triggers:
+    - template:
+        name: restart-pod-trigger
+        k8s:
+          operation: create
+          source:
+            resource:
+              apiVersion: batch/v1
+              kind: Job
+              metadata:
+                generateName: restart-pod-
+              spec:
+                template:
+                  spec:
+                    containers:
+                    - name: kubectl
+                      image: bitnami/kubectl
+                      command:
+                      - kubectl
+                      - rollout
+                      - restart
+                      - deployment/your-deployment-name
+                    restartPolicy: Never
