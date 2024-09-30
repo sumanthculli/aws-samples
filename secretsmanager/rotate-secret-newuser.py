@@ -5,6 +5,8 @@ import os
 import pg
 import pgdb
 import time
+import random
+import string
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -102,7 +104,7 @@ def create_secret(service_client, arn, token):
         logger.info("createSecret: Successfully retrieved secret for %s." % arn)
     except service_client.exceptions.ResourceNotFoundException:
         # Generate a new username
-        current_dict['username'] = generate_new_username(current_dict['username'])
+        current_dict['username'] = generate_new_username()
         current_dict['password'] = get_random_password(service_client)
         
         # Put the secret
@@ -377,7 +379,7 @@ def get_random_password(service_client):
     response = service_client.get_random_password(**password_params)
     return response['RandomPassword']
 
-def generate_new_username(base_username):
+def generate_new_username(prefix='pgsqlnewuser'):
     """Generates a new username based on the current timestamp
 
     This helper function generates a new username by appending the current timestamp to the base username
@@ -390,7 +392,11 @@ def generate_new_username(base_username):
 
     """
     timestamp = int(time.time())
-    return f"{base_username}_{timestamp}"
+    random_suffix = ''.join(random.choices(string.ascii_lowercase + string.digits, k=4))
+    return f"{prefix}_{timestamp}_{random_suffix}"
+
+
+    #return f"{base_username}_{timestamp}"
 
 
 def fetch_instance_arn_from_system_tags(service_client, secret_arn):
