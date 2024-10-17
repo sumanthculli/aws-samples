@@ -1,0 +1,43 @@
+{
+  "typeName": "Custom::CertManagerCertificate",
+  "description": "Schema for cert-manager issued certificates",
+  "properties": {
+    "Name": {
+      "type": "string",
+      "description": "Name of the certificate"
+    },
+    "Namespace": {
+      "type": "string",
+      "description": "Namespace of the certificate"
+    },
+    "CommonName": {
+      "type": "string",
+      "description": "Common Name of the certificate"
+    },
+    "DNSNames": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "DNS names in the certificate"
+    },
+    "Issuer": {
+      "type": "string",
+      "description": "Issuer of the certificate"
+    },
+    "SecretName": {
+      "type": "string",
+      "description": "Name of the secret containing the certificate"
+    },
+    "RenewalTime": {
+      "type": "string",
+      "description": "Time when the certificate will be renewed"
+    }
+  },
+  "required": ["Name", "Namespace"],
+  "primaryIdentifier": [
+    "/properties/Name",
+    "/properties/Namespace"
+  ],
+  "additionalProperties": false
+}
