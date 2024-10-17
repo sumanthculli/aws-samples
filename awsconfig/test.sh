@@ -6,7 +6,7 @@ aws cloudformation register-type \
   --schema-handler-package s3://your-bucket/cert-manager-certificate-schema.json \
   --execution-role-arn arn:aws:iam::your-account-id:role/your-execution-role
 
-#Create an AWS Config rule that uses your Lambda function:
+#4. Create an AWS Config rule that uses your Lambda function:
 aws config put-config-rule --config-rule '{
   "ConfigRuleName": "cert-manager-certificates",
   "Source": {
@@ -25,3 +25,7 @@ aws config put-config-rule --config-rule '{
     ]
   }
 }'
+
+# This setup will create a custom resource in AWS Config that fetches cert-manager certificates from your EKS cluster. The Lambda function will run periodically to collect certificate data and create configuration items in AWS Config.
+# Remember to set up the necessary IAM roles and permissions for the Lambda function to access your EKS cluster and AWS Config. Also, ensure that your Lambda function has network access to your EKS cluster.
+
