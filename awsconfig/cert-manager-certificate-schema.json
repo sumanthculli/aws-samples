@@ -2,6 +2,18 @@
   "typeName": "Custom::CertManagerCertificate",
   "description": "Schema for cert-manager issued certificates",
   "properties": {
+    "Labels": {
+      "type": "object",
+      "description": "Labels attached to the certificate",
+      "patternProperties": {
+        "^.*$": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
     "Name": {
       "type": "string",
       "description": "Name of the certificate"
