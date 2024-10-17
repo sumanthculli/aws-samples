@@ -32,7 +32,9 @@ def lambda_handler(event, context):
                 "DNSNames": cert['spec'].get('dnsNames', []),
                 "Issuer": cert['spec']['issuerRef']['name'],
                 "SecretName": cert['spec']['secretName'],
-                "RenewalTime": cert['status'].get('renewalTime', '')
+                "RenewalTime": cert['status'].get('renewalTime', ''),
+                "Labels": cert['metadata'].get('labels', {})  # Add this line
+
             }
             certificates.append(cert_data)
     
