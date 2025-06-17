@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-secrets-deployment
+  namespace: game-2048
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-secrets
+  template:
+    metadata:
+      labels:
+        app: nginx-secrets
+    spec:
+      serviceAccountName: nginx-sa  # Ensure this service account has necessary permissions
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "aws-secrets-provider"
+      containers:
+        - name: nginx
+          image: nginx:latest
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: "/mnt/secrets-store"
+              readOnly: false

@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: rotate-secret-presync-
+  namespace: game-2048
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: rotate-secret
+        image: amazon/aws-cli
+        env:
+        - name: AWS_DEFAULT_REGION
+          value: us-west-2  # Replace with your AWS region
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          aws secretsmanager rotate-secret \
+            --secret-id your-secret-arn \
+            --client-request-token $(uuidgen)
+      restartPolicy: Never
+      serviceAccountName: nginx-sa
+  backoffLimit: 2
