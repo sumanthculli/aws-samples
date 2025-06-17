@@ -4,4 +4,4 @@ metadata:
   name: nginx-sa
   namespace: game-2048
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::889195446400:role/eks-secrets-manager-role
+    eks.amazonaws.com/role-arn: arn:aws:iam::<AccountID>:role/eks-secrets-manager-role
