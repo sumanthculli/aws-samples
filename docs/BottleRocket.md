@@ -5,7 +5,9 @@ Of course. Here is a comprehensive technical specification document tailored for
 ## **Technical Specification: Working with Bottlerocket on EKS**
 
 **Document Owner:** [Your Team/Name]
+
 **Last Updated:** [Date]
+
 **Audience:** Developers and SREs working with the EKS cluster.
 
 ### 1. Introduction & Purpose
