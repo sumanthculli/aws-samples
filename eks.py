@@ -6,7 +6,7 @@ from eks_token import get_token
 # --- CONFIGURE THESE VALUES ---
 CLUSTER_NAME = "aexp-v4-cluster"
 REGION = "us-west-2"
-ROLE_ARN = "arn:aws:iam::889195446400:role/eks-lower-role"  # Set to '' if not assuming role
+ROLE_ARN = "arn:aws:iam::<ACCOUNT-ID>:role/eks-lower-role"  # Set to '' if not assuming role
 NAMESPACE = "default"   # Change as needed
 
 # --- ASSUME ROLE IF PROVIDED ---
