@@ -1,0 +1,182 @@
+Return-Path: <john.doe@example.com>
+Received: from mail.example.com (mail.example.com [203.0.113.1])
+    by inbound-smtp.us-east-1.amazonaws.com with SMTP id 0000014a-f4d4-4f39-8b5d-61f7b8c9d2e1-000000
+    for <incoming@yourdomain.com>; Wed, 17 Sep 2025 15:30:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=example.com; s=default;
+    h=from:to:subject:date:message-id:mime-version;
+Message-ID: <CABcD3fGhI4jKlMnOpQrStUvWxYz@example.com>
+Date: Wed, 17 Sep 2025 15:30:45 +0000
+From: John Doe <john.doe@example.com>
+Reply-To: john.doe@example.com
+To: SES PDF Converter <incoming@yourdomain.com>
+Subject: Quarterly Sales Report - Q3 2025
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="----=_Part_123456_789012345.1726589445000"
+
+------=_Part_123456_789012345.1726589445000
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+Dear Team,
+
+I hope this email finds you well. I'm writing to share our Q3 2025 sales performance and key highlights.
+
+EXECUTIVE SUMMARY
+=================
+Our third quarter has been exceptional, with significant growth across all product lines and geographic regions.
+
+KEY METRICS
+===========
+- Total Revenue: $2.4M (up 23% from Q2)
+- New Customers: 1,247 (up 18% from Q2)
+- Customer Retention: 94.2% (industry leading)
+- Average Deal Size: $15,600 (up 12% from Q2)
+
+REGIONAL PERFORMANCE
+===================
+North America: $1.2M (50% of total revenue)
+Europe: $720K (30% of total revenue)
+Asia-Pacific: $480K (20% of total revenue)
+
+TOP PERFORMING PRODUCTS
+======================
+1. Enterprise Software Suite - $960K
+2. Cloud Analytics Platform - $576K
+3. Mobile Applications - $384K
+4. Professional Services - $480K
+
+CUSTOMER FEEDBACK HIGHLIGHTS
+===========================
+"The new analytics dashboard has transformed how we make decisions. Highly recommended!" 
+- Sarah Johnson, CTO at TechCorp
+
+"Outstanding customer support and product reliability. Five stars!"
+- Michael Chen, Director of Operations at GlobalTech
+
+CHALLENGES AND OPPORTUNITIES
+===========================
+While we've seen tremendous growth, we've identified several areas for improvement:
+
+- Need to expand our customer support team by 30%
+- Opportunity to enter the Latin American market
+- Potential for strategic partnerships in the healthcare sector
+- Investment needed in R&D for AI-powered features
+
+NEXT QUARTER OUTLOOK
+===================
+For Q4 2025, we're targeting:
+- Revenue goal: $2.8M (17% growth)
+- New customer acquisitions: 1,500
+- Launch of two new product features
+- Expansion into two new geographic markets
+
+ACTION ITEMS
+============
+1. Schedule team meeting for Q4 planning (Due: Sep 25)
+2. Finalize budget allocation for new hires (Due: Sep 30)
+3. Complete market research for Latin America (Due: Oct 15)
+4. Begin development of AI features (Due: Oct 1)
+
+Thank you all for your hard work and dedication. Let's keep this momentum going into Q4!
+
+Best regards,
+
+John Doe
+VP of Sales & Marketing
+Example Corporation
+Phone: +1 (555) 123-4567
+Email: john.doe@example.com
+LinkedIn: linkedin.com/in/johndoe
+
+P.S. Don't forget about the team celebration dinner on Friday at 7 PM. Looking forward to seeing everyone there!
+
+------=_Part_123456_789012345.1726589445000
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Quarterly Sales Report - Q3 2025</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .header { background-color: #f4f4f4; padding: 20px; border-radius: 5px; }
+        .metrics { background-color: #e8f5e8; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .highlight { background-color: #fff3cd; padding: 10px; border-left: 4px solid #ffc107; }
+        .footer { background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Quarterly Sales Report - Q3 2025</h1>
+        <p><strong>From:</strong> John Doe, VP of Sales & Marketing</p>
+        <p><strong>Date:</strong> September 17, 2025</p>
+    </div>
+
+    <h2>Executive Summary</h2>
+    <p>Our third quarter has been <strong>exceptional</strong>, with significant growth across all product lines and geographic regions.</p>
+
+    <div class="metrics">
+        <h2>Key Metrics</h2>
+        <table>
+            <tr><th>Metric</th><th>Q3 2025</th><th>Growth</th></tr>
+            <tr><td>Total Revenue</td><td>$2.4M</td><td>+23%</td></tr>
+            <tr><td>New Customers</td><td>1,247</td><td>+18%</td></tr>
+            <tr><td>Customer Retention</td><td>94.2%</td><td>Industry Leading</td></tr>
+            <tr><td>Average Deal Size</td><td>$15,600</td><td>+12%</td></tr>
+        </table>
+    </div>
+
+    <h2>Regional Performance</h2>
+    <ul>
+        <li><strong>North America:</strong> $1.2M (50% of total revenue)</li>
+        <li><strong>Europe:</strong> $720K (30% of total revenue)</li>
+        <li><strong>Asia-Pacific:</strong> $480K (20% of total revenue)</li>
+    </ul>
+
+    <h2>Top Performing Products</h2>
+    <ol>
+        <li>Enterprise Software Suite - $960K</li>
+        <li>Cloud Analytics Platform - $576K</li>
+        <li>Mobile Applications - $384K</li>
+        <li>Professional Services - $480K</li>
+    </ol>
+
+    <div class="highlight">
+        <h3>Customer Feedback Highlights</h3>
+        <blockquote>
+            <p><em>"The new analytics dashboard has transformed how we make decisions. Highly recommended!"</em><br>
+            - Sarah Johnson, CTO at TechCorp</p>
+        </blockquote>
+        <blockquote>
+            <p><em>"Outstanding customer support and product reliability. Five stars!"</em><br>
+            - Michael Chen, Director of Operations at GlobalTech</p>
+        </blockquote>
+    </div>
+
+    <h2>Next Quarter Outlook</h2>
+    <p>For Q4 2025, we're targeting:</p>
+    <ul>
+        <li>Revenue goal: <strong>$2.8M</strong> (17% growth)</li>
+        <li>New customer acquisitions: <strong>1,500</strong></li>
+        <li>Launch of <strong>two new product features</strong></li>
+        <li>Expansion into <strong>two new geographic markets</strong></li>
+    </ul>
+
+    <div class="footer">
+        <p><strong>John Doe</strong><br>
+        VP of Sales & Marketing<br>
+        Example Corporation<br>
+        Phone: +1 (555) 123-4567<br>
+        Email: john.doe@example.com</p>
+        
+        <p><em>P.S. Don't forget about the team celebration dinner on Friday at 7 PM!</em></p>
+    </div>
+</body>
+</html>
+
+------=_Part_123456_789012345.1726589445000--
