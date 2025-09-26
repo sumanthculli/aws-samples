@@ -1,0 +1,9 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: OtelDeploymentOnly
+metadata:
+  name: opentelemetrycollector-mode-deployment
+spec:
+  match:
+    kinds:
+      - apiGroups: ["opentelemetry.io"]
+        kinds: ["OpenTelemetryCollector"]
