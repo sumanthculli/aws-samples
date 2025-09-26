@@ -1,0 +1,22 @@
+apiVersion: templates.gatekeeper.sh/v1
+kind: ConstraintTemplate
+metadata:
+  name: oteldeploymentonly
+spec:
+  crd:
+    spec:
+      names:
+        kind: OtelDeploymentOnly
+      validation:
+        openAPIV3Schema:
+          properties: {}
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package oteldeploymentonly
+
+        violation[{"msg": msg}] {
+          input.review.kind.kind == "OpenTelemetryCollector"
+          not input.review.object.spec.mode == "deployment"
+          msg := "Only 'deployment' mode is allowed for OpenTelemetryCollector resources."
+        }
