@@ -1,0 +1,135 @@
+## 1. Create the SSM Automation Role
+
+Trust policy (ssm-automation-trust-policy.json):
+json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "ssm.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+
+
+Permissions policy (ssm-automation-permissions.json):
+json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "rds:FailoverGlobalCluster",
+        "rds:DescribeGlobalClusters"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+
+
+Create the role:
+bash
+aws iam create-role \
+  --role-name SSM-Aurora-Failover-Role \
+  --assume-role-policy-document file://ssm-automation-trust-policy.json \
+  --region us-west-2
+
+aws iam put-role-policy \
+  --role-name SSM-Aurora-Failover-Role \
+  --policy-name RDS-Failover-Permissions \
+  --policy-document file://ssm-automation-permissions.json \
+  --region us-west-2
+
+
+## 2. Updated SSM Document with Role
+
+json
+{
+  "schemaVersion": "0.3",
+  "description": "Failover Aurora Global Database to secondary region",
+  "assumeRole": "arn:aws:iam::<account-id>:role/SSM-Aurora-Failover-Role",
+  "parameters": {
+    "GlobalClusterIdentifier": {
+      "type": "String",
+      "description": "Aurora Global Database cluster identifier"
+    },
+    "TargetDbClusterIdentifier": {
+      "type": "String",
+      "description": "ARN of the secondary cluster to promote (us-east-1)"
+    }
+  },
+  "mainSteps": [
+    {
+      "action": "aws:executeAwsApi",
+      "name": "FailoverGlobalDatabase",
+      "inputs": {
+        "Service": "rds",
+        "Api": "FailoverGlobalCluster",
+        "GlobalClusterIdentifier": "{{ GlobalClusterIdentifier }}",
+        "TargetDbClusterIdentifier": "{{ TargetDbClusterIdentifier }}"
+      },
+      "outputs": [
+        {
+          "Name": "GlobalCluster",
+          "Selector": "$.GlobalCluster.GlobalClusterIdentifier",
+          "Type": "String"
+        }
+      ]
+    },
+    {
+      "action": "aws:waitForAwsResourceProperty",
+      "name": "WaitForFailoverComplete",
+      "inputs": {
+        "Service": "rds",
+        "Api": "DescribeGlobalClusters",
+        "GlobalClusterIdentifier": "{{ GlobalClusterIdentifier }}",
+        "PropertySelector": "$.GlobalClusters[0].Status",
+        "DesiredValues": ["available"]
+      },
+      "timeoutSeconds": 600
+    }
+  ]
+}
+
+
+Key changes:
+- schemaVersion: "0.3" (for Automation documents)
+- assumeRole: Points to the SSM Automation role ARN
+
+## 3. Create the Document
+
+bash
+aws ssm create-document \
+  --name "Aurora-Global-Failover" \
+  --document-type "Automation" \
+  --content file://aurora-global-failover.json \
+  --region us-west-2
+
+
+## 4. Update FIS Role
+
+The FIS role needs permission to pass the SSM Automation role:
+
+json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "ssm:StartAutomationExecution",
+      "Resource": "arn:aws:ssm:us-west-2:<account-id>:automation-definition/Aurora-Global-Failover:*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iam:PassRole",
+      "Resource": "arn:aws:iam::<account-id>:role/SSM-Aurora-Failover-Role"
+    }
+  ]
+}
+
