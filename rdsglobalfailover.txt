@@ -1,0 +1,106 @@
+json
+{
+  "schemaVersion": "2.2",
+  "description": "Failover Aurora Global Database to secondary region using AWS CLI",
+  "parameters": {
+    "GlobalClusterIdentifier": {
+      "type": "String",
+      "description": "Aurora Global Database cluster identifier"
+    },
+    "TargetDbClusterIdentifier": {
+      "type": "String",
+      "description": "ARN of the secondary cluster to promote (us-east-1)"
+    }
+  },
+  "mainSteps": [
+    {
+      "action": "aws:runShellScript",
+      "name": "FailoverGlobalDatabase",
+      "inputs": {
+        "runCommand": [
+          "#!/bin/bash",
+          "set -e",
+          "echo 'Starting Aurora Global Database failover...'",
+          "aws rds failover-global-cluster \\",
+          "  --global-cluster-identifier {{ GlobalClusterIdentifier }} \\",
+          "  --target-db-cluster-identifier {{ TargetDbClusterIdentifier }} \\",
+          "  --region us-west-2",
+          "echo 'Failover initiated successfully'"
+        ]
+      }
+    },
+    {
+      "action": "aws:runShellScript",
+      "name": "WaitForFailoverComplete",
+      "inputs": {
+        "runCommand": [
+          "#!/bin/bash",
+          "set -e",
+          "echo 'Waiting for failover to complete...'",
+          "for i in {1..60}; do",
+          "  STATUS=$(aws rds describe-global-clusters \\",
+          "    --global-cluster-identifier {{ GlobalClusterIdentifier }} \\",
+          "    --region us-west-2 \\",
+          "    --query 'GlobalClusters[0].Status' \\",
+          "    --output text)",
+          "  echo \"Current status: $STATUS\"",
+          "  if [ \"$STATUS\" = \"available\" ]; then",
+          "    echo 'Failover completed successfully'",
+          "    exit 0",
+          "  fi",
+          "  sleep 10",
+          "done",
+          "echo 'Failover timeout'",
+          "exit 1"
+        ],
+        "timeoutSeconds": "600"
+      }
+    }
+  ]
+}
+
+
+## Create the Document:
+
+bash
+aws ssm create-document \
+  --name "Aurora-Global-Failover-Shell" \
+  --document-type "Command" \
+  --content file://aurora-global-failover-shell.json \
+  --region us-west-2
+
+
+## FIS Experiment Template:
+
+json
+{
+  "description": "Simulate regional Aurora failure via global DB failover",
+  "targets": {
+    "ssm-instances": {
+      "resourceType": "aws:ec2:instance",
+      "selectionMode": "COUNT(1)",
+      "resourceTags": {
+        "fis-ready": "true"
+      }
+    }
+  },
+  "actions": {
+    "trigger-failover": {
+      "actionId": "aws:ssm:send-command",
+      "parameters": {
+        "documentArn": "arn:aws:ssm:us-west-2:<account-id>:document/Aurora-Global-Failover-Shell",
+        "documentParameters": "{\"GlobalClusterIdentifier\":\"<your-global-cluster-id>\",\"TargetDbClusterIdentifier\":\"arn:aws:rds:us-east-1:<account-id>:cluster:<us-east-1-cluster-name>\"}",
+        "duration": "PT10M"
+      },
+      "targets": {
+        "Instances": "ssm-instances"
+      }
+    }
+  },
+  "stopConditions": [
+    {
+      "source": "none"
+    }
+  ],
+  "roleArn": "arn:aws:iam::<account-id>:role/<fis-role>"
+}
